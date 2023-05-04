@@ -7,7 +7,13 @@ jobs:
     steps:
       - name: "Checkout"
         uses: actions/checkout@v3
-      - name: Extract last user name
+      - name: Get last user
         run: |
-          LAST_USER=$(cat subscriptions.yaml | jq '.users | map(.user) | .[-1]')
+          # Get the value of the `user` field from subscriptions.yaml
+          user=$(grep "^ *user:" subscriptions.yaml | tail -n1 | awk '{print $2}')
+          # Set an environment variable for the last user
+          echo "LAST_USER=$user" >> $GITHUB_ENV
+
+      - name: Show last user
+        run: |
           echo "Last user: $LAST_USER"
