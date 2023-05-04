@@ -11,7 +11,7 @@ jobs:
         run: echo "done"
       - name: Extract last user name from subscriptions.yaml
         id: extract-last-user
-        uses: gordolio/yaml-action@v1.1.1
+        uses: colpal/setup-yq@v1
         with:
           path: subscription.yaml
       - run: |
