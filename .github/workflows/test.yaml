@@ -5,15 +5,24 @@ jobs:
     name: deploy to staging
     runs-on: ubuntu-latest
     steps:
-      - name: 'Checkout'
+      - name: "Checkout"
         uses: actions/checkout@v3
-      - name: echo
-        run: echo "done"
-      - name: Extract last user name from subscriptions.yaml
-        id: extract-last-user
+      - name: Install yq
         uses: colpal/setup-yq@v1
         with:
-          path: subscription.yaml
-      - run: |
-          last_user=$(echo "${{ steps.extract-last-user.outputs.contents }}" | jq '.users | map(.name) | .[-1]')
-          echo "::set-output name=last-user::$last_user"
+          yq-version: 4
+
+      - name: Extract last user name from subscriptions.yaml
+        id: extract-last-user
+        uses: colpal/actions-yq@v1
+        with:
+          script: |
+            # Extract the last user name from the YAML file using yq
+            users=$(yq eval '.users[].name' path/to/subscription.yml)
+            last_user=$(echo "$users" | tail -n1)
+            echo "::set-output name=last-user::$last_user"
+
+      - name: Use Last User
+        run: |
+          last_user="${{ steps.extract-last-user.outputs.last-user }}"
+          echo "The last user is ${last_user}"
