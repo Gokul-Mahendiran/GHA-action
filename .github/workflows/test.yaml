@@ -7,20 +7,30 @@ jobs:
     steps:
       - name: "Checkout"
         uses: actions/checkout@v3
-      - name: Install yq
-        uses: colpal/setup-yq@v1
-        with:
-          yq-version: 4
-
+      name: Valitation
+on: [push, workflow_dispatch, pull_request]
+jobs:
+  Validate:
+    name: deploy to staging
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v3
       - name: Extract last user name from subscriptions.yaml
         id: extract-last-user
-        uses: colpal/actions-yq@v1
+        uses: tj-actions/yaml@v2.1.0
         with:
-          script: |
-            # Extract the last user name from the YAML file using yq
-            users=$(yq eval '.users[].name' path/to/subscription.yml)
-            last_user=$(echo "$users" | tail -n1)
-            echo "::set-output name=last-user::$last_user"
+          path: subscription.yaml
+          text: |
+            {{
+              users := .users | map(.name);
+              last_user := users[-1];
+              {
+                "last-user": last_user
+              }
+            }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Use Last User
         run: |
