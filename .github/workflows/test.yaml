@@ -14,6 +14,6 @@ jobs:
         uses: gordolio/yaml-action@v1.1.1
         with:
           path: subscription.yaml
-        run: |
+      - run: |
           last_user=$(echo "${{ steps.extract-last-user.outputs.contents }}" | jq '.users | map(.name) | .[-1]')
           echo "::set-output name=last-user::$last_user"
