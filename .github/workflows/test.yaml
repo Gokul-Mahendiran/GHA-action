@@ -16,4 +16,5 @@ jobs:
 
       - name: Show last user
         run: |
+          LAST_USER=$(cat subscriptions.yaml | jq '.users | map(.user) | .[-1]')
           echo "Last user: $LAST_USER"
