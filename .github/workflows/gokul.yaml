@@ -13,6 +13,4 @@ jobs:
           user=$(grep "^ *user:" subscriptions.yaml | tail -n1 | awk '{print $2}')
           # Set an environment variable for the last user
           echo "LAST_USER=$user" >> $GITHUB_ENV
-      - name: Show last user
-        run: |
           echo "Last user: $LAST_USER"
