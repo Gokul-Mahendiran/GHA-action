@@ -16,5 +16,4 @@ jobs:
 
       - name: Show last user
         run: |
-          LAST_USER=$(cat subscriptions.yaml | yq r - 'users[*].user' | tail -n1)
           echo "Last user: $LAST_USER"
