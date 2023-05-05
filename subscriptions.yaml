@@ -1,7 +1,13 @@
 resource:
-    user: brad.janke@kanini.com
+  - user: brad.janke@kanini.com
     cloud: azure
     department: cloud
     type: subscription
     name: FakeCompanyPOC
     reason: POC for Fake Company
+  - user: gokul.mahendiran@gmail.com
+    cloud: aws
+    department: cloud
+    type: dummy
+    name: test
+    reason: test
