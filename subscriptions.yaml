@@ -5,6 +5,7 @@ resource:
     type: subscription
     name: FakeCompanyPOC
     reason: POC for Fake Company
+    
   - user: gokul.mahendiran@gmail.com
     cloud: aws
     department: cloud
